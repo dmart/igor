@@ -95,9 +95,17 @@ public class ArtifactoryItem {
 
       case DEBIAN:
         String poolPath = null;
+        String debArchive = null;
 
         if (baseUrl != null) {
           poolPath = String.format("%s/%s/%s/%s", baseUrl, repo, path, name);
+          debArchive =
+              String.format(
+                  "%s/%s %s %s",
+                  baseUrl,
+                  repo,
+                  getPropertyValueByKey("deb.distribution"),
+                  getPropertyValueByKey("deb.component"));
         }
 
         Artifact.ArtifactBuilder artifactBuilderDeb =
@@ -107,14 +115,7 @@ public class ArtifactoryItem {
                 .name(getPropertyValueByKey("deb.name"))
                 .version(getPropertyValueByKey("deb.version"))
                 .provenance(repo)
-                .artifactAccount(baseUrl + '/' + repo)
-                .location(
-                    String.format(
-                        "%s/%s %s %s",
-                        baseUrl,
-                        repo,
-                        getPropertyValueByKey("deb.distribution"),
-                        getPropertyValueByKey("deb.component")));
+                .location(debArchive);
         return artifactBuilderDeb.build();
     }
     return null;
