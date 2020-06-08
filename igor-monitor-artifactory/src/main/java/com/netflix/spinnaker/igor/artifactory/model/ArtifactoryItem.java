@@ -101,15 +101,15 @@ public class ArtifactoryItem {
           poolPath = String.format("%s/%s/%s/%s", baseUrl, repo, path, name);
           debArchive =
               String.format(
-                  "%s %s %s",
+                  "%s/%s %s %s",
                   baseUrl,
+                  repo,
                   getPropertyValueByKey("deb.distribution"),
                   getPropertyValueByKey("deb.component"));
         }
 
         Artifact.ArtifactBuilder artifactBuilderDeb =
             Artifact.builder()
-                .customKind(true)
                 .type("deb/file")
                 .reference(poolPath)
                 .name(getPropertyValueByKey("deb.name"))
