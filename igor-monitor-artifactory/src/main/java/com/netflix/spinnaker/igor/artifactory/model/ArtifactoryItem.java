@@ -92,6 +92,31 @@ public class ArtifactoryItem {
                 .provenance(repo)
                 .location(filePath);
         return artifactBuilderHelm.build();
+
+      case DEBIAN:
+        String poolPath = null;
+        String debArchive = null;
+
+        if (baseUrl != null) {
+          poolPath = String.format("%s/%s/%s/%s", baseUrl, repo, path, name);
+          debArchive =
+              String.format(
+                  "%s %s %s",
+                  baseUrl,
+                  getPropertyValueByKey("deb.distribution"),
+                  getPropertyValueByKey("deb.component"));
+        }
+
+        Artifact.ArtifactBuilder artifactBuilderDeb =
+            Artifact.builder()
+                .customKind(true)
+                .type("deb/file")
+                .reference(poolPath)
+                .name(getPropertyValueByKey("deb.name"))
+                .version(getPropertyValueByKey("deb.version"))
+                .provenance(repo)
+                .location(debArchive);
+        return artifactBuilderDeb.build();
     }
     return null;
   }

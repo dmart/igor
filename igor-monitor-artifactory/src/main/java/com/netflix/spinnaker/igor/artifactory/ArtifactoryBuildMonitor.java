@@ -138,6 +138,9 @@ public class ArtifactoryBuildMonitor
               if (ArtifactoryRepositoryType.HELM.equals(search.getRepoType())) {
                 includes.add("@chart.name");
                 includes.add("@chart.version");
+              } else if (ArtifactoryRepositoryType.DEBIAN.equals(search.getRepoType())) {
+                includes.add("@deb.name");
+                includes.add("@deb.version");
               }
 
               AqlQueryBuilder aqlQueryBuilder =
